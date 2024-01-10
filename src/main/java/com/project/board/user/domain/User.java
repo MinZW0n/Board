@@ -1,6 +1,7 @@
 package com.project.board.user.domain;
 
 import com.project.board.comment.domain.Comment;
+import com.project.board.common.BaseEntity;
 import com.project.board.post.domain.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

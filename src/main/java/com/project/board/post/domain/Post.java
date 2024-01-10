@@ -2,6 +2,7 @@ package com.project.board.post.domain;
 
 import com.project.board.board.domain.Board;
 import com.project.board.comment.domain.Comment;
+import com.project.board.common.BaseEntity;
 import com.project.board.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends BaseEntity {
 
 
     @Id

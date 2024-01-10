@@ -1,5 +1,6 @@
 package com.project.board.board.domain;
 
+import com.project.board.common.BaseEntity;
 import com.project.board.post.domain.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

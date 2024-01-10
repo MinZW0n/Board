@@ -1,5 +1,6 @@
 package com.project.board.comment.domain;
 
+import com.project.board.common.BaseEntity;
 import com.project.board.post.domain.Post;
 import com.project.board.user.domain.User;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import org.springframework.data.annotation.Id;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
