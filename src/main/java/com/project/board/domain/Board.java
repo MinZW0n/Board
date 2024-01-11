@@ -1,7 +1,5 @@
-package com.project.board.board.domain;
+package com.project.board.domain;
 
-import com.project.board.common.BaseEntity;
-import com.project.board.post.domain.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

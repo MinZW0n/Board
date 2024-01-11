@@ -1,8 +1,8 @@
-package com.project.board.user.domain;
+package com.project.board.domain;
 
-import com.project.board.comment.domain.Comment;
-import com.project.board.common.BaseEntity;
-import com.project.board.post.domain.Post;
+import com.project.board.domain.Comment;
+import com.project.board.domain.BaseEntity;
+import com.project.board.domain.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
