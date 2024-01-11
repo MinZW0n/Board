@@ -25,4 +25,9 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Post> post;
 
+    @Builder
+    public Board(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 }

@@ -18,4 +18,9 @@ public class BoardService {
     public List<Board> getAllBoards(){
         return boardRepository.findAll();
     }
+
+    public Long saveBoard(Board board){
+        Board result = boardRepository.save(board);
+        return result.getId();
+    }
 }
