@@ -1,7 +1,6 @@
 package com.project.board.repository;
 
 import com.project.board.domain.Board;
-import com.project.board.domain.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JdbcTemplateBoardRepository {
@@ -22,7 +22,12 @@ public class JdbcTemplateBoardRepository {
     }
 
     public List<Board> findAll() {
-        return jdbcTemplate.query("SELECT * FROM board", postRowMapper());
+        return jdbcTemplate.query("SELECT * FROM board", RowMapper());
+    }
+
+    public Optional<Board> findById(Long id) {
+        String sql = "select * from board where id = ?";
+        return jdbcTemplate.query(sql, RowMapper(), id).stream().findAny();
     }
 
     public Board save(Board board) {
@@ -36,14 +41,24 @@ public class JdbcTemplateBoardRepository {
             return ps;
         }, keyHolder);
 
-        long postId = keyHolder.getKey().longValue();
-        board.setId(postId);
+        long boardId = keyHolder.getKey().longValue();
+        board.setId(boardId);
         return board;
     }
 
+    public void update(Board board){
+        String sql = "update board set title = ? where id = ?";
+        jdbcTemplate.update(sql, board.getTitle(), board.getId());
+    }
 
 
-    private RowMapper<Board> postRowMapper() {
+    public void delete(Long id){
+        String sql = "delete from board where id = ?";
+        jdbcTemplate.update(sql,id);
+    }
+
+
+    private RowMapper<Board> RowMapper() {
         return (rs, rowNum) -> {
             Board board = new Board();
             board.setId(rs.getLong("id"));

@@ -4,9 +4,7 @@ import com.project.board.dto.BoardDto;
 import com.project.board.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class BoardController {
@@ -19,14 +17,15 @@ public class BoardController {
 
 
     @GetMapping("/")
-    public String hello() {
-        return "index";
-    }
-
-    @GetMapping("/boards")
     public String index(Model model) {
         model.addAttribute("boards", boardService.getAllBoards());
         return "home";
+    }
+
+    @GetMapping("/boards/{id}")
+    public String getBoard(@PathVariable(name = "id") Long id, Model model) {
+        model.addAttribute("board", boardService.getBoardById(id));
+        return "board";
     }
 
     @GetMapping("/boards/new")
@@ -36,8 +35,26 @@ public class BoardController {
 
     @PostMapping("/boards/new")
     public String createBoard(BoardDto boardDto){
-        Long boardId = boardService.saveBoard(boardDto.toEntity());
-        return "redirect:/boards";
+        boardService.saveBoard(boardDto.toEntity());
+        return "redirect:/";
     }
 
+    @GetMapping("/boards/edit/{id}")
+    public String editBoard(@PathVariable(name = "id") Long id, Model model){
+        model.addAttribute("board", boardService.getBoardById(id));
+        return "editBoardForm";
+    }
+
+    @PostMapping("/boards/edit/{id}")
+    public String updateBoard(@PathVariable(name = "id") Long id, @ModelAttribute BoardDto boardDto){
+        boardDto.setId(id);
+        boardService.updateBoard(boardDto.toEntity());
+        return "redirect:/";
+    }
+
+    @PostMapping("/boards/{id}")
+    public String deleteBoard(@PathVariable(name = "id") Long id){
+        boardService.deleteBoard(id);
+        return "redirect:/";
+    }
 }

@@ -19,8 +19,19 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public Long saveBoard(Board board){
-        Board result = boardRepository.save(board);
-        return result.getId();
+    public Board getBoardById(Long id) {
+        return boardRepository.findById(id).orElse(null);
+    }
+
+    public void saveBoard(Board board){
+        boardRepository.save(board);
+    }
+
+    public void updateBoard(Board board){
+        boardRepository.update(board);
+    }
+
+    public void deleteBoard(Long id){
+        boardRepository.delete(id);
     }
 }
