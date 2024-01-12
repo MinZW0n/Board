@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Comment extends BaseEntity {
 
     @Id
@@ -18,7 +18,7 @@ public class Comment extends BaseEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    private String comment;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -31,13 +31,13 @@ public class JdbcTemplateBoardRepository {
     }
 
     public Board save(Board board) {
-        String sql = "insert into board(title) value(?)";
+        String sql = "insert into board(name) value(?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, board.getTitle());
+            ps.setString(1, board.getName());
             return ps;
         }, keyHolder);
 
@@ -47,8 +47,8 @@ public class JdbcTemplateBoardRepository {
     }
 
     public void update(Board board){
-        String sql = "update board set title = ? where id = ?";
-        jdbcTemplate.update(sql, board.getTitle(), board.getId());
+        String sql = "update board set name = ? where id = ?";
+        jdbcTemplate.update(sql, board.getName(), board.getId());
     }
 
 
@@ -62,7 +62,7 @@ public class JdbcTemplateBoardRepository {
         return (rs, rowNum) -> {
             Board board = new Board();
             board.setId(rs.getLong("id"));
-            board.setTitle(rs.getString("title"));
+            board.setName(rs.getString("name"));
             return board;
         };
     }

@@ -1,11 +1,8 @@
 package com.project.board.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import lombok.*;
+
 
 import java.util.List;
 
@@ -13,26 +10,29 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Builder(toBuilder = true)
 public class Post extends BaseEntity {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
     private Long id;
 
+    @Column(nullable = false, length = 30)
     private String title;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "comment_id")
+    @OneToMany(mappedBy = "post")
     private List<Comment> comment;
 }

@@ -1,11 +1,7 @@
 package com.project.board.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
@@ -13,21 +9,23 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Builder(toBuilder = true)
 public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
 
-    private String title;
+    @Column(nullable = false, unique = true, length = 20)
+    private String name;
 
     @OneToMany(mappedBy = "board")
-    private List<Post> post;
+    private List<Post> posts;
 
     @Builder
-    public Board(Long id, String title) {
+    public Board(Long id, String name) {
         this.id = id;
-        this.title = title;
+        this.name = name;
     }
 }

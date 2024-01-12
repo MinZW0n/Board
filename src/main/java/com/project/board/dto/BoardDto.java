@@ -17,20 +17,20 @@ import java.time.LocalDateTime;
 public class BoardDto {
 
     private Long id;
-    private String title;
+    private String name;
 
 
     public Board toEntity() {
         return Board.builder()
                 .id(id)
-                .title(title)
+                .name(name)
                 .build();
     }
 
-    @ConstructorProperties({"id", "title"})
-    public BoardDto(Long id, String title){
+    @ConstructorProperties({"id", "name"})
+    public BoardDto(Long id, String name){
         this.id = id;
-        this.title = title;
+        this.name = name;
 
     }
 }
