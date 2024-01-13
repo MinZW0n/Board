@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class PostService {
@@ -42,6 +44,27 @@ public class PostService {
         Post savedPost = postRepository.save(post);
 
         return savedPost;
+    }
+
+    public Post updatePost(Post post, Long postId){
+        post.setId(postId);
+
+        Post foundPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        Optional.ofNullable(post.getTitle())
+                .ifPresent(title -> foundPost.setTitle(title));
+        Optional.ofNullable(post.getContent())
+                .ifPresent(content -> foundPost.setContent(content));
+
+        return postRepository.save(foundPost);
+    }
+
+    public void deletePost(Long id) {
+        Post foundPost = postRepository.findById(id)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        postRepository.delete(foundPost);
     }
 
 }

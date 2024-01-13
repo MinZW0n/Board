@@ -24,7 +24,7 @@ public class PostController {
 
 
     @GetMapping("/{postId}")
-    public String getPostDetail(@PathVariable Long postId, Model model) {
+    public String getPostDetail(@PathVariable(name = "postId") Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
 
@@ -38,7 +38,7 @@ public class PostController {
         return "post/createPost";
     }
 
-    @PostMapping("/posts/create")
+    @PostMapping("/create")
     public String createPostPost(@ModelAttribute("postDto") PostDto postDto, @RequestParam(name = "boardId") Long boardId) {
         System.out.println("Reached createPostPost method");
         Post post = postDto.toEntity();
@@ -47,31 +47,30 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/edit")
-    public String editPost(@PathVariable Long postId, Model model) {
+    public String editPost(@PathVariable(name = "postId") Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
         return "post/editPost";
     }
 
-    // PostMapping 게시글 수정
-//    @PostMapping("/{postId}/edit")
-//    public String editPost(@PathVariable Long postId, @ModelAttribute PostDto postDto, RedirectAttributes redirectAttributes) {
-//        Post post = postDto.toEntity();
-//        Post updatedPost = postService.updatePost(post, postId);
-//
-//        redirectAttributes.addAttribute("postId", updatedPost.getId());
-//        redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
-//        return "redirect:/posts/{postId}";
-//    }
-//
-//    // DeleteMapping 게시글 삭제
-//    @DeleteMapping("/{postId}")
-//    public String deletePost(@PathVariable Long postId, RedirectAttributes redirectAttributes) {
-//        // postService를 사용하여 주어진 postId에 해당하는 게시물 삭제
-//
-//        // 삭제 성공 메시지를 FlashAttribute로 전달
-//
-//        // 게시물 목록 페이지로 리다이렉션
-//
-//    }
+    @PostMapping("/{postId}/edit")
+    public String editPost(@PathVariable(name = "postId") Long postId, @ModelAttribute("postDto") PostDto postDto, RedirectAttributes redirectAttributes) {
+        Post post = postDto.toEntity();
+        Post updatedPost = postService.updatePost(post, postId);
+
+        redirectAttributes.addAttribute("postId", updatedPost.getId());
+        redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
+        return "redirect:/posts/{postId}";
+    }
+
+    @DeleteMapping("/{postId}")
+    public String deletePost(@PathVariable(name = "postId") Long postId, RedirectAttributes redirectAttributes) {
+
+        postService.deletePost(postId);
+
+        redirectAttributes.addFlashAttribute("message", "게시글이 삭제되었습니다.");
+
+        Post post = postService.findPost(postId);
+        return  "redirect:/boards/" + post.getBoard().getId();
+    }
 }

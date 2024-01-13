@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.beans.ConstructorProperties;
+
 @Getter
 @Setter
-@AllArgsConstructor
+
 public class PostDto {
     private Long id;
     private String title;
@@ -20,6 +22,13 @@ public class PostDto {
                 .title(title)
                 .content(content)
                 .build();
+    }
+
+    @ConstructorProperties({"id", "title","content"})
+    public PostDto(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
     }
 
 
