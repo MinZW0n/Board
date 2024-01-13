@@ -1,26 +1,24 @@
-package com.project.board.comment.domain;
+package com.project.board.domain;
 
-import com.project.board.post.domain.Post;
-import com.project.board.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+@Entity
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
 
-    private String comment;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
