@@ -14,7 +14,7 @@ public class BoardService {
 
     private final JdbcTemplateBoardRepository boardRepository;
 
-    private Board foundBoard;
+
 
     public BoardService(JdbcTemplateBoardRepository boardRepository) {
         this.boardRepository = boardRepository;
@@ -35,15 +35,16 @@ public class BoardService {
     }
 
     public void updateBoard(Board board){
+        final Board[] foundBoard = new Board[1];
 
-        foundBoard = boardRepository.findById(board.getId())
+        foundBoard[0] = boardRepository.findById(board.getId())
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.BOARD_NOT_FOUND));
 
         Optional.ofNullable(board.getName())
-                .ifPresent(name -> { foundBoard = foundBoard.toBuilder().name(name).build(); });
+                .ifPresent(name -> { foundBoard[0] = foundBoard[0].toBuilder().name(name).build(); });
 
 
-        boardRepository.update(foundBoard);
+        boardRepository.update(foundBoard[0]);
     }
 
     public void deleteBoard(Long id){

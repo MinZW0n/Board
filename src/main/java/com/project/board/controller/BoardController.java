@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class BoardController {
 
-    private BoardService boardService;
+    private final BoardService boardService;
 
     private final PostService postService;
 
