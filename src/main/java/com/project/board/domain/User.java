@@ -1,16 +1,13 @@
-package com.project.board.user.domain;
+package com.project.board.domain;
 
-import com.project.board.comment.domain.Comment;
-import com.project.board.post.domain.Post;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
+import com.project.board.domain.Comment;
+import com.project.board.domain.BaseEntity;
+import com.project.board.domain.Post;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
@@ -18,7 +15,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@Entity
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
