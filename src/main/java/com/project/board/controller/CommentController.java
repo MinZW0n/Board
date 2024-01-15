@@ -5,10 +5,7 @@ import com.project.board.dto.CommentDto;
 import com.project.board.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -26,6 +23,14 @@ public class CommentController {
         Comment comment = commentDto.toEntity();
         commentService.createComment(comment,postId);
         redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/posts/{postId}";
+    }
+
+    @PostMapping("/{commentId}/edit")
+    public String updateComment(@ModelAttribute CommentDto commentDto, @PathVariable(name = "commentId") Long commentId, RedirectAttributes redirectAttributes){
+        Comment comment = commentDto.toEntity();
+        Comment updatedComment = commentService.updateComment(comment, commentId);
+        redirectAttributes.addAttribute("postId", updatedComment.getPost().getId());
         return "redirect:/posts/{postId}";
     }
 

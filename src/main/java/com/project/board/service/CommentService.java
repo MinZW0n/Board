@@ -10,6 +10,7 @@ import com.project.board.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -39,5 +40,15 @@ public class CommentService {
 
         return commentRepository.save(comment);
 
+    }
+
+    public Comment updateComment(Comment comment, Long commentId){
+        Comment foundComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+
+        Optional.ofNullable(comment.getContent())
+                .ifPresent(content -> foundComment.setContent(content));
+
+        return commentRepository.save(foundComment);
     }
 }
