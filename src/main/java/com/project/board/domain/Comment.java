@@ -1,16 +1,14 @@
 package com.project.board.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder(toBuilder = true)
 public class Comment extends BaseEntity {
 
     @Id
@@ -25,6 +23,6 @@ public class Comment extends BaseEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "comment")
+    @JoinColumn(name = "post_id")
     private Post post;
 }
