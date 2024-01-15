@@ -2,11 +2,14 @@ package com.project.board.controller;
 
 import com.project.board.domain.Comment;
 import com.project.board.dto.CommentDto;
+import com.project.board.repository.CommentRepository;
 import com.project.board.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/comments")
@@ -31,6 +34,14 @@ public class CommentController {
         Comment comment = commentDto.toEntity();
         Comment updatedComment = commentService.updateComment(comment, commentId);
         redirectAttributes.addAttribute("postId", updatedComment.getPost().getId());
+        return "redirect:/posts/{postId}";
+    }
+
+    @DeleteMapping("/{commentId}")
+    public String deleteComment(@PathVariable(name = "commentId") Long commentId, RedirectAttributes redirectAttributes){
+        Comment comment = commentService.findComment(commentId);
+        commentService.deleteComment(commentId);
+        redirectAttributes.addAttribute("postId", comment.getPost().getId());
         return "redirect:/posts/{postId}";
     }
 

@@ -8,6 +8,7 @@ import com.project.board.global.exception.ServiceLogicException;
 import com.project.board.repository.CommentRepository;
 import com.project.board.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,10 @@ public class CommentService {
         this.postRepository = postRepository;
     }
 
-    public List<Comment> findComment(){
-        return commentRepository.findAll();
+    public Comment findComment(Long commentId){
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+        return comment;
     }
 
     public List<Comment> findCommentByPostId(Long postId){
@@ -50,5 +53,13 @@ public class CommentService {
                 .ifPresent(content -> foundComment.setContent(content));
 
         return commentRepository.save(foundComment);
+    }
+
+
+    public void deleteComment(Long commentId){
+        Comment foundComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+
+        commentRepository.delete(foundComment);
     }
 }
