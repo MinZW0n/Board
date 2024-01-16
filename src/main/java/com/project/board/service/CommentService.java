@@ -10,6 +10,7 @@ import com.project.board.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class CommentService {
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
 
         comment.setPost(post);
+        comment.setCreatedAt(LocalDateTime.now());
 
         return commentRepository.save(comment);
 
@@ -51,6 +53,8 @@ public class CommentService {
 
         Optional.ofNullable(comment.getContent())
                 .ifPresent(content -> foundComment.setContent(content));
+
+        comment.setUpdatedAt(LocalDateTime.now());
 
         return commentRepository.save(foundComment);
     }
