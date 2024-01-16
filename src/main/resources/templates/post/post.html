@@ -49,6 +49,9 @@
         <div class="header mb-3">
           <h2 class="text-start" th:text="${post.title}">게시글 제목</h2>
         </div>
+        <small class="text-secondary">
+          <p class="mb-2" th:if="${post.createdAt}">게시물 작성 시간: <span th:if="${post.createdAt}" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">게시물 작성 시간</span></p>
+        </small>
         <p class="m-0" th:text="${post.content}">게시글 내용</p>
         <hr class="mt-4" />
         <h4 class="mb-3">
