@@ -38,11 +38,10 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public String deleteComment(@PathVariable(name = "commentId") Long commentId, RedirectAttributes redirectAttributes){
-        Comment comment = commentService.findComment(commentId);
+    public void deleteComment(@PathVariable(name = "commentId") Long commentId){
+
         commentService.deleteComment(commentId);
-        redirectAttributes.addAttribute("postId", comment.getPost().getId());
-        return "redirect:/posts/{postId}";
+
     }
 
 }
