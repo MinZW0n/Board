@@ -22,7 +22,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public String createComment(@ModelAttribute CommentDto commentDto, @RequestParam(name = "postId") Long postId, RedirectAttributes redirectAttributes){
+    public String createComment(@ModelAttribute CommentDto commentDto, @RequestParam(name = "postId") Long postId,
+                                RedirectAttributes redirectAttributes){
         Comment comment = commentDto.toEntity();
         commentService.createComment(comment,postId);
         redirectAttributes.addAttribute("postId", postId);
@@ -30,7 +31,8 @@ public class CommentController {
     }
 
     @PostMapping("/{commentId}/edit")
-    public String updateComment(@ModelAttribute CommentDto commentDto, @PathVariable(name = "commentId") Long commentId, RedirectAttributes redirectAttributes){
+    public String updateComment(@ModelAttribute CommentDto commentDto, @PathVariable(name = "commentId") Long commentId,
+                                RedirectAttributes redirectAttributes){
         Comment comment = commentDto.toEntity();
         Comment updatedComment = commentService.updateComment(comment, commentId);
         redirectAttributes.addAttribute("postId", updatedComment.getPost().getId());

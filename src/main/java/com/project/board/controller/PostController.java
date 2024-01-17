@@ -68,12 +68,12 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     public String deletePost(@PathVariable(name = "postId") Long postId, RedirectAttributes redirectAttributes) {
-
+        Post post = postService.findPost(postId);
         postService.deletePost(postId);
 
         redirectAttributes.addFlashAttribute("message", "게시글이 삭제되었습니다.");
 
-        Post post = postService.findPost(postId);
+
         return  "redirect:/boards/" + post.getBoard().getId();
     }
 }

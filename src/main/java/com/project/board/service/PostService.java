@@ -39,6 +39,7 @@ public class PostService {
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
     }
 
+    @Transactional
     public Post createPost(Post post, Long boardId) {
         Board boardToCreate = boardService.getBoardById(boardId);
         post.setBoard(boardToCreate);
@@ -48,6 +49,7 @@ public class PostService {
         return savedPost;
     }
 
+    @Transactional
     public Post updatePost(Post post, Long postId){
         post.setId(postId);
 

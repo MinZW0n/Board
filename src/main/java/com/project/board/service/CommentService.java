@@ -8,6 +8,7 @@ import com.project.board.global.exception.ServiceLogicException;
 import com.project.board.repository.CommentRepository;
 import com.project.board.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class CommentService {
         return commentRepository.findByPostId(postId);
     }
 
+    @Transactional
     public Comment createComment(Comment comment, Long postId){
 
         Post post = postRepository.findById(postId)
@@ -47,6 +49,7 @@ public class CommentService {
 
     }
 
+    @Transactional
     public Comment updateComment(Comment comment, Long commentId){
         Comment foundComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.COMMENT_NOT_FOUND));
