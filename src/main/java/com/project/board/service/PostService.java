@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -38,14 +39,17 @@ public class PostService {
                 .orElseThrow(() -> new ServiceLogicException(ExceptionCode.POST_NOT_FOUND));
     }
 
+    @Transactional
     public Post createPost(Post post, Long boardId) {
         Board boardToCreate = boardService.getBoardById(boardId);
         post.setBoard(boardToCreate);
+        post.setCreatedAt(LocalDateTime.now());
         Post savedPost = postRepository.save(post);
 
         return savedPost;
     }
 
+    @Transactional
     public Post updatePost(Post post, Long postId){
         post.setId(postId);
 
@@ -57,6 +61,7 @@ public class PostService {
         Optional.ofNullable(post.getContent())
                 .ifPresent(content -> foundPost.setContent(content));
 
+        post.setUpdatedAt(LocalDateTime.now());
         return postRepository.save(foundPost);
     }
 

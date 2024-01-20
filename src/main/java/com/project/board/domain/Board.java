@@ -23,6 +23,11 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Post> posts;
 
+    @OneToOne(mappedBy = "board", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "BOARD_IMAGE_ID")
+    private BoardImage boardImage;
+
+
     @Builder
     public Board(Long id, String name) {
         this.id = id;

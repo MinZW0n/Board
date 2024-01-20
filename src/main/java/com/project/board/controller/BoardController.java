@@ -3,6 +3,7 @@ package com.project.board.controller;
 import com.project.board.domain.Board;
 import com.project.board.domain.Post;
 import com.project.board.dto.BoardDto;
+import com.project.board.dto.BoardImageUploadDto;
 import com.project.board.service.BoardService;
 import com.project.board.service.PostService;
 import org.springframework.data.domain.Page;
@@ -53,8 +54,8 @@ public class BoardController {
     }
 
     @PostMapping("/boards/create")
-    public String createBoard(BoardDto boardDto){
-        boardService.saveBoard(boardDto.toEntity());
+    public String createBoard(BoardDto boardDto, @ModelAttribute BoardImageUploadDto boardImageUploadDto){
+        boardService.saveBoard(boardDto, boardImageUploadDto);
         return "redirect:/";
     }
 
