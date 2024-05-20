@@ -65,9 +65,9 @@
                 th:href="@{/posts/{postId}(postId=${post.id})}"
         >
             <h4 class="fw-bold mb-1" th:text="${post.title}">게시글 제목</h4>
-            <small class="text-secondary" th:text="${post.createdAt}"
-            >게시글 생성일</small
-            >
+            <small class="text-secondary">
+                <p class="mb-2" th:if="${post.createdAt}">게시물 작성 시간: <span th:if="${post.createdAt}" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">게시물 작성 시간</span></p>
+            </small>
         </a>
         <span
                 th:if="${postPage.isEmpty()}"

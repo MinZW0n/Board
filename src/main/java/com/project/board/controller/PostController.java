@@ -1,9 +1,11 @@
 package com.project.board.controller;
 
 
+import com.project.board.domain.Comment;
 import com.project.board.domain.Post;
 import com.project.board.dto.PostDto;
 import com.project.board.service.BoardService;
+import com.project.board.service.CommentService;
 import com.project.board.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,15 @@ public class PostController {
 
     private final PostService postService;
     private final BoardService boardService;
+    private final CommentService commentService;
 
 
     @GetMapping("/{postId}")
     public String getPostDetail(@PathVariable(name = "postId") Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
-
+        List<Comment> comments = commentService.findCommentByPostId(postId);
+        model.addAttribute("comments", comments);
         return "post/post";
     }
 
@@ -40,7 +44,6 @@ public class PostController {
 
     @PostMapping("/create")
     public String createPostPost(@ModelAttribute("postDto") PostDto postDto, @RequestParam(name = "boardId") Long boardId) {
-        System.out.println("Reached createPostPost method");
         Post post = postDto.toEntity();
         Post createdPost = postService.createPost(post, boardId);
         return "redirect:/boards/" + createdPost.getBoard().getId();
@@ -65,12 +68,12 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     public String deletePost(@PathVariable(name = "postId") Long postId, RedirectAttributes redirectAttributes) {
-
+        Post post = postService.findPost(postId);
         postService.deletePost(postId);
 
         redirectAttributes.addFlashAttribute("message", "게시글이 삭제되었습니다.");
 
-        Post post = postService.findPost(postId);
+
         return  "redirect:/boards/" + post.getBoard().getId();
     }
 }

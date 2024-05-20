@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class BoardDto {
 
     private Long id;
     private String name;
-
+    private List<String> imageUrls;
 
     public Board toEntity() {
         return Board.builder()
@@ -33,4 +35,13 @@ public class BoardDto {
         this.name = name;
 
     }
+
+    public void addImageUrl(String imageUrl) {
+        if (imageUrls == null) {
+            imageUrls = new ArrayList<>();
+        }
+        imageUrls.add(imageUrl);
+    }
+
+
 }

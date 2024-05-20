@@ -71,8 +71,9 @@
                     >
                         <img
                                 class="img-thumbnail w-50 h-50 me-3"
-                                src="hellobit.png"
-                                alt="hellobit"
+                                th:src="@{'/image/' + ${board.boardImage.url}}"
+                                alt="게시판 사진"
+
                         />
                         <div>
                             <h4
