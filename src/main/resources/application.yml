@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: user
+    url: jdbc:mysql://localhost:3306/board
+    password: UserPassword
+  profiles:
+    active: local
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: 'true'
+  mvc:
+    static-path-pattern: /static/**
+    resources:
+      static-locations: classpath:/static/
+  resources:
+    resources:
+      static-locations: file:/Users/minjiwon/Desktop/board/src/main/resources/static/
+file:
+  boardImagePath: /Users/minjiwon/Desktop/board/src/main/resources/static/image/
